@@ -16,7 +16,7 @@
 .imageList td, #customers th 
 {
     font-size:1.2em;
-    border:1px solid #98bf21;
+    border:1px solid #30C29E;
     padding:3px 7px 2px 7px;
 }
 .imageList th 
@@ -25,7 +25,7 @@
     text-align:left;
     padding-top:5px;
     padding-bottom:4px;
-    background-color:#A7C942;
+    background-color:#30C29E;
     color:#fff;
     text-align: center;
 }
