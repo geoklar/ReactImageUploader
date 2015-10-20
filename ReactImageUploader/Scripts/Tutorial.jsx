@@ -1,13 +1,4 @@
-﻿//var data = [
-//    { "Id": 1, "Name": "dep.jpg", "Description": "Department image", "ImagePath": "https://geoklar.blob.core.windows.net/images/dep.jpg" },
-//    { "Id": 4, "Name": "interamerican.jpg", "Description": "Interamerican Image", "ImagePath": "https://geoklar.blob.core.windows.net/images/interamerican.jpg" },
-//    { "Id": 13, "Name": "sport24.png", "Description": "φαν", "ImagePath": "https://geoklar.blob.core.windows.net/images/sport24.png" },
-//    { "Id": 14, "Name": "dfhdfghdfg.png", "Description": "dfhdh", "ImagePath": "https://geoklar.blob.core.windows.net/images/dfhdfghdfg.png" },
-//    { "Id": 15, "Name": "dep2.jpg", "Description": "τεστ", "ImagePath": "https://geoklar.blob.core.windows.net/images/dep2.jpg" },
-//    { "Id": 17, "Name": ".jpg", "Description": "", "ImagePath": "https://geoklar.blob.core.windows.net/images/.jpg" }
-//];
-
-var ImageList = React.createClass({
+﻿var ImageList = React.createClass({
     loadImgFromServer: function (image) {
         var xhr = new XMLHttpRequest();
         xhr.open('get', '/images', true);
@@ -43,13 +34,22 @@ var ImageList = React.createClass({
             <td>{image.Name}</td>
             <td>{image.Description}</td>
             <td><a target="_blank" href={image.ImagePath}>{image.ImagePath}</a></td>
-            <td><img src="../Pictures/delete.png" id={'img_' + image.Id} onClick={delHandle.handleImageDelete.bind(this,image)}/></td>
+            <td className="delete"><img src="../Pictures/delete.png" id={'img_' + image.Id} onClick={delHandle.handleImageDelete.bind(this,image)}/></td>
         </tr>
       );
     });
     return (
       <table className="imageList">
-          {imageNodes}
+          <thead>
+            <th>Α/Α</th>
+            <th>Όνομα</th>
+            <th>Περιγραφή</th>
+            <th>Τοποθεσία</th>
+            <th>Διαγραφή</th>
+          </thead>
+          <tbody>
+              {imageNodes}
+          </tbody>
       </table>
     );
   }
@@ -136,8 +136,11 @@ var ImageForm = React.createClass({
         return (
           <form className="imageForm" onSubmit={this.handleSubmit}>
             <input type="file" placeholder="Επιλέξτε αρχείο εικόνας" ref="imagePath"/>
+              <br />
             <input type="text" placeholder="File name" ref="name" />
+              <br />
             <input type="text" placeholder="File description" ref="description"/>
+              <br />
             <input type="submit" value="Αποστολή" />
             <img src="../Pictures/loader.gif" ref="loader" className="loaderRemove"/>
           </form>

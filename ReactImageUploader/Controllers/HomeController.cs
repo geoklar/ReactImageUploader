@@ -33,7 +33,7 @@ namespace ReactImageUploader.Controllers
         [HttpPost]
         public ActionResult AddImage(ImageModel image)
         {
-            if (image.File.ContentLength > 0 && !string.IsNullOrEmpty(image.Name))
+            if (image.File.ContentLength > 0)
             {
                 ImageMethods az = new ImageMethods();
                 OrderezeTask.Image tmpImage = new OrderezeTask.Image();
@@ -47,15 +47,15 @@ namespace ReactImageUploader.Controllers
                 }
                 catch { }
 
-                tmpImage.Name = image.Name + "." + FileExtension;
+                tmpImage.Name = (string.IsNullOrEmpty(file.FileName) ? file.FileName : image.Name + "." + FileExtension);
                 tmpImage.Description = image.Description;
-                tmpImage.ImagePath = "https://geoklar.blob.core.windows.net/images/" + image.Name + "." + FileExtension;
+                tmpImage.ImagePath = "https://geoklar.blob.core.windows.net/images/" + (string.IsNullOrEmpty(file.FileName) ? file.FileName : image.Name + "." + FileExtension);
                 int id = az.AddNewImage(tmpImage);
                 if (id > 0)
                 {
                     BinaryReader b = new BinaryReader(file.InputStream);
                     byte[] binData = b.ReadBytes(file.ContentLength);
-                    az.UploadBlob(binData, image.Name + "." + FileExtension);
+                    az.UploadBlob(binData, (string.IsNullOrEmpty(file.FileName) ? file.FileName : image.Name + "." + FileExtension));
                     return Content("Success :)");
                 }
             }
