@@ -1,0 +1,9 @@
+﻿.loaderRemove{
+    margin-bottom: -10px;
+    display:none;
+}
+
+.loaderAdd{
+    margin-bottom: -10px;
+    display:inline;
+}
