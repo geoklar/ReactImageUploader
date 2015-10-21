@@ -21,6 +21,12 @@ h1
     font-size: 18px;
 }
 
+.imageBox{
+    background: #F7F7F7;
+    padding: 60px;
+
+}
+
 .imageList
 {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;

@@ -1,5 +1,11 @@
 ﻿var ImageList = React.createClass({
-    loadImgFromServer: function (image) {
+    getInitialState: function () {
+        return { data: [] };
+    },
+    componentWillMount: function () {
+        this.loadImgFromServer();
+    },
+    loadImgFromServer: function () {
         var xhr = new XMLHttpRequest();
         xhr.open('get', '/images', true);
         xhr.onload = function () {
@@ -10,19 +16,25 @@
     },
     handleImageDelete: function (image) {
         //var images = this.state.data;
+        //console.log(images);
+        //console.log(image);
         //var newImages = images.concat([image]);
-        //this.setState({ data: newImages });
+        //this.setState({ data: newImages }, function () {
+        //    console.log(this.state.data);
+        //}.bind(this));
         document.getElementById('img_' + image.Id).src = '../Pictures/loader.gif';
         var dt = new FormData();
         dt.append('Name', image.Name);
         dt.append('Id', image.Id);
-        this.setState({ data: [] });
+        
         var xhr = new XMLHttpRequest();
         xhr.open('post', 'images/delete', true);
         xhr.onload = function () {
             //document.getElementById('img_' + image.Id).src = '../Pictures/delete.png';
+            alert("loadData");
             this.loadImgFromServer();
         }.bind(this);
+        alert("sendToDelete");
         xhr.send(dt);
     },
     render: function () {
@@ -34,7 +46,7 @@
             <td>{image.Name}</td>
             <td>{image.Description}</td>
             <td><a target="_blank" href={image.ImagePath}>{image.ImagePath}</a></td>
-            <td className="delete"><img src="../Pictures/delete.png" id={'img_' + image.Id} onClick={delHandle.handleImageDelete.bind(this,image)}/></td>
+            <td className="delete" key={'sr_' + image.Id}><img src="../Pictures/delete.png" id={'img_' + image.Id} onClick={delHandle.handleImageDelete.bind(this,image)}/></td>
         </tr>
       );
     });
