@@ -1,8 +1,6 @@
-﻿var CompanyApp = React.createClass({
-        //getInitialState: function() {
-        //  return {companylist:this.props.companies};
-    //},
-        loadCommentsFromServer: function () {
+﻿//Basic component 
+var ImageApp = React.createClass({
+        loadImagesFromServer: function () {
             var xhr = new XMLHttpRequest();
             xhr.open('get', this.props.url, true);
             xhr.onload = function () {
@@ -15,35 +13,28 @@
             return { data: [] };
         },
         componentDidMount: function () {
-            this.loadCommentsFromServer();
-            setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+            this.loadImagesFromServer();
+            setInterval(this.loadImagesFromServer, this.props.pollInterval);
         },
-        handleNewRowSubmit: function (newcompany) {
-            //var images = this.state.data;
-            //var newImages = images.concat([image]);
-            //this.setState({ data: newImages });
-
+        handleNewImageSubmit: function (newimage) {
             var data = new FormData();
-            data.append('Name', newcompany.Name);
-            data.append('Description', newcompany.Description);
-            data.append('File', newcompany.File);
+            data.append('Name', newimage.Name);
+            data.append('Description', newimage.Description);
+            data.append('File', newimage.File);
 
             var xhr = new XMLHttpRequest();
             xhr.open('post', this.props.submitUrl, true);
             xhr.onload = function () {
-                newcompany.Loader.className = '';
-                newcompany.Loader.className = 'loaderRemove';
-                this.loadCommentsFromServer();
+                newimage.Loader.className = '';
+                newimage.Loader.className = 'loaderRemove';
+                this.loadImagesFromServer();
             }.bind(this);
             xhr.send(data);
-          //this.setState( {companylist: this.state.companylist.concat([newcompany])} );
         },
-        handleCompanyRemove: function( company ) {
-            
-        document.getElementById('img_' + company.Id).src = '../Pictures/loader.gif';
+        handleImageRemove: function( image ) {
         var dt = new FormData();
-        dt.append('Name', company.Name);
-        dt.append('Id', company.Id);
+        dt.append('Name', image.Name);
+        dt.append('Id', image.Id);
 
         var xhr = new XMLHttpRequest();
         xhr.open('post', 'images/delete', true);
@@ -51,13 +42,15 @@
             var index = -1;
             var clength = this.state.data.length;
             for (var i = 0; i < clength; i++) {
-                if (this.state.data[i].Id === company.Id) {
+                if (this.state.data[i].Id === image.Id) {
                     index = i;
                     break;
                 }
             }
             this.state.data.splice(index, 1);
             this.setState({ data: this.state.data });
+            document.getElementById('img_loader').className = '';
+            document.getElementById('img_loader').className = 'loaderRemove';
         }.bind(this);
         xhr.send(dt);
         },
@@ -69,10 +62,10 @@
             <table style={tableStyle}>
               <tr>
                 <td style={leftTdStyle}>
-                  <CompanyList clist={this.state.companylist} data={this.state.data}  onCompanyRemove={this.handleCompanyRemove}/>
+                  <ImageList data={this.state.data}  onImageRemove={this.handleImageRemove}/>
                 </td>
                 <td style={rightTdStyle}>
-                  <NewRow onRowSubmit={this.handleNewRowSubmit}/>
+                  <NewRow onImageSubmit={this.handleNewImageSubmit}/>
                 </td>
               </tr>
           </table>
@@ -80,17 +73,19 @@
         }
       });
       
-      var CompanyList = React.createClass({
-        handleCompanyRemove: function(company){
-          this.props.onCompanyRemove( company );
+//ImageApp sub-component 
+    var ImageList = React.createClass({
+        handleImageRemove: function (image) {
+            //Make Table loader image visible until image row is deleted 
+            document.getElementById('img_loader').className = '';
+            document.getElementById('img_loader').className = 'loaderAdd';
+              this.props.onImageRemove(image);
         },
         render: function() {
-            var companies = [];
-            //var h3Style = { font: '95% Arial,Helvetica,sans-serif;' }
           var that = this;
-          var imageNodes = this.props.data.map(function (company) {
+          var imageNodes = this.props.data.map(function (image) {
               return (
-                    <Company company={company} onCompanyDelete={that.handleCompanyRemove} />
+                    <Image image={image} onImageDelete={that.handleImageRemove} />
                 );
           });
             
@@ -98,33 +93,41 @@
             <div className="imageBox">
                 <h3>Πίνακας Αποθηκευμένων Εικόνων</h3>
               <table className="imageList">
-                <thead><tr><th>Α/Α</th><th>Όνομα</th><th>Περιγραφή</th><th>Τοποθεσία</th><th>Διαγραφή</th></tr></thead>
+                <thead><tr><th></th><th>Α/Α</th><th>Όνομα</th><th>Περιγραφή</th><th>Τοποθεσία</th><th>Διαγραφή</th></tr></thead>
                 <tbody>{imageNodes}</tbody>
               </table>
+                <div style={{ textAlign: 'right' }}>
+                    <img src="../Pictures/loader.gif" style={{marginRight: '28px'}} id="img_loader" className="loaderRemove" />
+                </div>
             </div>
             );
         }
       });
-      
-      var Company = React.createClass({
-        handleRemoveCompany: function() {
-          this.props.onCompanyDelete( this.props.company );
+     
+//ImageList sub-component 
+      var Image = React.createClass({
+        handleRemoveImage: function() {
+          this.props.onImageDelete( this.props.image );
           return false;
         },
-        render: function() {
+        render: function () {
+            var bgImage = { width: '50px', height: '50px' };
+            var bgTdImage = { minWidth: '50px', minHeight: '50px', padding: '0px' };
           return (
             <tr>
-              <td>{this.props.company.Id}</td>
-              <td>{this.props.company.Name}</td>
-              <td>{this.props.company.Description}</td>
-              <td>{this.props.company.ImagePath}</td>
-              <td className="delete"><img src="../Pictures/delete.png" id={'img_' + this.props.company.Id} onClick={this.handleRemoveCompany} /></td>
+              <td style={bgTdImage}><img style={bgImage} src={this.props.image.ImagePath}/></td>
+              <td>{this.props.image.Id}</td>
+              <td>{this.props.image.Name}</td>
+              <td>{this.props.image.Description}</td>
+              <td><a target="_blank" href={this.props.image.ImagePath}>{this.props.image.ImagePath}</a></td>
+              <td className="delete"><img src="../Pictures/delete.png" onClick={this.handleRemoveImage} /></td>
               
             </tr>
             );
         }
       });
-//<td><input type="button"  className="btn btn-primary" value="Διαγραφή" onClick={this.handleRemoveCompany}/></td>
+
+//ImageApp sub-component for adding new entries
       var NewRow = React.createClass({
           handleSubmit: function (e) {
               e.preventDefault();
@@ -143,7 +146,7 @@
                   return;
               }
               var newrow = { Name: name, Description: description, File: imagePath, Loader: loader };
-              this.props.onRowSubmit( newrow );
+              this.props.onImageSubmit( newrow );
           
               this.refs.name.getDOMNode().value = '';
               this.refs.description.getDOMNode().value = '';
@@ -178,6 +181,6 @@
       });
 
 React.render(
-  <CompanyApp url="/images" submitUrl="/images/new" pollInterval={600000} />,
+  <ImageApp url="/images" submitUrl="/images/new" pollInterval={60000} />,
   document.getElementById('content')
 );

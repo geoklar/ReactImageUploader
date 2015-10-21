@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace ReactImageUploader.Helpers
 {
+    //Explicit Interface OrderezeTask.IImagesService Implementation
     public class ImageMethods : OrderezeTask.IImagesService
     {
         StorageCredentials sc;
@@ -19,12 +20,14 @@ namespace ReactImageUploader.Helpers
         private string connectionString = Properties.Settings.Default.DatabaseConnectionString;
         private string databaseImagesTable = Properties.Settings.Default.DatabaseImagesTable;
 
+        
         public ImageMethods()
         {
             sc = new StorageCredentials(Properties.Settings.Default.StorageUsername, Properties.Settings.Default.StorageAccessKey);
             storageAccount = new CloudStorageAccount(sc, false);
         }
 
+        //Uploading method for Azure Storage
         public void UploadBlob(byte[] data, string name)
         {
             try
@@ -40,6 +43,7 @@ namespace ReactImageUploader.Helpers
             catch { }
         }
 
+        //Deleting method for Azure Storage
         public void DeleteBlob(string name)
         {
             try
@@ -52,6 +56,7 @@ namespace ReactImageUploader.Helpers
             catch { }
         }
 
+        //Adding entry of an image to SQL Server Database table in Azure
         public int AddNewImage(OrderezeTask.Image image)
         {
             int id = 0;
@@ -82,6 +87,7 @@ namespace ReactImageUploader.Helpers
             return id;
         }
 
+        //Getting List of images from SQL Server Database table in Azure
         public List<OrderezeTask.Image> GetImages()
         {
             List<OrderezeTask.Image> list = new List<OrderezeTask.Image>();
@@ -121,6 +127,7 @@ namespace ReactImageUploader.Helpers
             return list;
         }
 
+        //Deleting entry of an image from SQL Server Database table in Azure
         public void DeleteImage(int id)
         {
             try

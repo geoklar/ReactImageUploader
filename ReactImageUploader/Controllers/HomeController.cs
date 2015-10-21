@@ -33,6 +33,7 @@ namespace ReactImageUploader.Controllers
         [HttpPost]
         public ActionResult AddImage(ImageModel image)
         {
+            //Checking if there is a file
             if (image.File.ContentLength > 0)
             {
                 ImageMethods az = new ImageMethods();
@@ -64,6 +65,7 @@ namespace ReactImageUploader.Controllers
             return Content("Fail :(");
         }
 
+        //Performs deletion of data entry and uploaded blob in Azure Storage
         [HttpPost]
         public ActionResult DeleteImage(ImageModel image)
         {

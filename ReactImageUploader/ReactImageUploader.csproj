@@ -181,6 +181,7 @@
     <Content Include="Global.asax" />
     <Content Include="Pictures\delete.png" />
     <Content Include="Pictures\loader.gif" />
+    <Content Include="Pictures\notFound.png" />
     <Content Include="Scripts\showdown.js" />
     <Content Include="Scripts\showdown.min.js" />
     <Content Include="Style\MyForm.css" />
