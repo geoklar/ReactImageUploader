@@ -182,8 +182,17 @@
     <Content Include="Pictures\delete.png" />
     <Content Include="Pictures\loader.gif" />
     <Content Include="Pictures\notFound.png" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\react\JSXTransformer-0.13.1.js" />
+    <Content Include="Scripts\react\react-0.13.1.js" />
+    <Content Include="Scripts\react\react-0.13.1.min.js" />
+    <Content Include="Scripts\react\react-0.14.0.min.js" />
+    <Content Include="Scripts\react\react-dom-0.14.0.min.js" />
+    <Content Include="Scripts\react\react-with-addons-0.13.1.js" />
+    <Content Include="Scripts\react\react-with-addons-0.13.1.min.js" />
     <Content Include="Scripts\showdown.js" />
     <Content Include="Scripts\showdown.min.js" />
+    <Content Include="Scripts\UploadForm.js" />
     <Content Include="Style\MyForm.css" />
     <Content Include="Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -222,7 +231,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\react\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

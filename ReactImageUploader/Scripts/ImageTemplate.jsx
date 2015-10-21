@@ -135,6 +135,7 @@ var ImageApp = React.createClass({
               var description = this.refs.description.getDOMNode().value;
               var loader = this.refs.loader.getDOMNode();
               var imagePath = this.refs.imagePath.files[0];
+              var ext = this.refs.imagePath.value.split('.').pop().toLowerCase();
               if (!name || !imagePath) {
                   if (!name && !imagePath)
                       alert("Παρακαλώ επιλέξτε αρχείο και εισάγετε το όνομα του.");
@@ -163,9 +164,11 @@ var ImageApp = React.createClass({
                 <h3>Προσθήκη Αρχείου Εικόνας</h3>
               <div className="input-group input-group-lg" style={inputStyle}>
                 <input type="file" className="form-control col-md-8" placeholder="Επιλέξτε αρχείο εικόνας" ref="imagePath" />
+                  <span className="form-required">*</span>
               </div>
               <div className="input-group input-group-lg" style={inputStyle}>
                 <input type="text"  className="form-control col-md-8" placeholder="Όνομα Εικόνας" ref="name"/>
+                  <span className="form-required">*</span>
               </div>
               <div className="input-group input-group-lg" style={inputStyle}>
                 <input type="text"  className="form-control col-md-8" placeholder="Περιγραφή Εικόνας" ref="description"/>
