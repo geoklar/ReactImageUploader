@@ -121,7 +121,14 @@ var ImageForm = React.createClass({
         var description = this.refs.description.getDOMNode().value.trim();
         var loader = this.refs.loader.getDOMNode();
         var file = this.refs.imagePath.files[0];
-        if (!name && !filePath) {
+        if (!name || !file) {
+            if (!name && !file)
+                alert("Παρακαλώ επιλέξτε αρχείο και εισάγετε το όνομα του.");
+            else if(!name)
+                alert("Παρακαλώ πληκτρολογήστε το όνομα του αρχείου.");
+            else if(!file)
+                alert("Παρακαλώ επιλέξτε ένα αρχείο.");
+            
             return;
         }
         // TODO: send request to the server
@@ -136,8 +143,10 @@ var ImageForm = React.createClass({
         return (
           <form className="imageForm" onSubmit={this.handleSubmit}>
             <input type="file" placeholder="Επιλέξτε αρχείο εικόνας" ref="imagePath"/>
+              <label className="imageLabel">*</label>
               <br />
             <input type="text" placeholder="File name" ref="name" />
+              <label className="imageLabel">*</label>
               <br />
             <input type="text" placeholder="File description" ref="description"/>
               <br />
@@ -149,6 +158,6 @@ var ImageForm = React.createClass({
 });
 
 React.render(
-  <ImageBox url="/images" submitUrl="/images/new" pollInterval={10000} />,
+  <ImageBox url="/images" submitUrl="/images/new" pollInterval={600000} />,
   document.getElementById('content')
 );

@@ -1,17 +1,31 @@
 ﻿.loaderRemove{
-    margin-bottom: -10px;
+    margin-bottom: -12px;
     display:none;
 }
 
 .loaderAdd{
-    margin-bottom: -10px;
+    margin-bottom: -12px;
     display:inline;
+}
+
+h1
+{
+    margin: 0 auto;
+    width: 25%;
+}
+
+.imageLabel{
+    font-weight: bold;
+    color: red;
+    padding-left: 10px;
+    font-size: 18px;
 }
 
 .imageList
 {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse:collapse;
+    margin: 0 auto;
 }
 .imageList td, #customers th 
 {
@@ -76,7 +90,7 @@
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    width: 100%;
+    width: 90%;
     background: #fff;
     margin-bottom: 4%;
     border: 1px solid #ccc;
@@ -106,7 +120,7 @@
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    width: 100%;
+    width: 90%;
     padding: 3%;
     background: #43D1AF;
     border-bottom: 2px solid #30C29E;
