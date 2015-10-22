@@ -54,22 +54,24 @@ var ImageApp = React.createClass({
         }.bind(this);
         xhr.send(dt);
         },
-        render: function() {
+        render: function () {            
           var tableStyle = {width: '100%'};
           var leftTdStyle = {width: '50%',padding:'20px',verticalAlign: 'top'};
-          var rightTdStyle = {width: '50%',padding:'20px',verticalAlign: 'top'};
-          return ( 
-            <table style={tableStyle}>
+          var rightTdStyle = { width: '50%', padding: '20px', verticalAlign: 'top' };
+          
+              return (
+                <table style={tableStyle}>
               <tr>
                 <td style={leftTdStyle}>
                   <ImageList data={this.state.data}  onImageRemove={this.handleImageRemove}/>
                 </td>
                 <td style={rightTdStyle}>
-                  <NewRow onImageSubmit={this.handleNewImageSubmit}/>
+                  <NewImage onImageSubmit={this.handleNewImageSubmit}/>
                 </td>
               </tr>
           </table>
-          );
+              );
+          
         }
       });
       
@@ -82,12 +84,13 @@ var ImageApp = React.createClass({
               this.props.onImageRemove(image);
         },
         render: function() {
-          var that = this;
-          var imageNodes = this.props.data.map(function (image) {
-              return (
-                    <Image image={image} onImageDelete={that.handleImageRemove} />
-                );
+            var that = this;
+            var imageNodes = this.props.data.map(function (image) {
+                return (
+                      <Image image={image} onImageDelete={that.handleImageRemove} />
+                  );
           });
+            
             
           return ( 
             <div className="imageBox">
@@ -103,32 +106,28 @@ var ImageApp = React.createClass({
             );
         }
       });
-     
+
 //ImageList sub-component 
-      var Image = React.createClass({
-        handleRemoveImage: function() {
-          this.props.onImageDelete( this.props.image );
-          return false;
-        },
-        render: function () {
-            var bgImage = { width: '50px', height: '50px' };
-            var bgTdImage = { minWidth: '50px', minHeight: '50px', padding: '0px' };
-          return (
-            <tr>
-              <td style={bgTdImage}><img style={bgImage} src={this.props.image.ImagePath}/></td>
-              <td>{this.props.image.Id}</td>
-              <td>{this.props.image.Name}</td>
-              <td>{this.props.image.Description}</td>
-              <td><a target="_blank" href={this.props.image.ImagePath}>{this.props.image.ImagePath}</a></td>
-              <td className="delete"><img src="../Pictures/delete.png" onClick={this.handleRemoveImage} /></td>
+var Image = React.createClass({
+    render: function () {
+        var bgImage = { width: '50px', height: '50px' };
+        var bgTdImage = { minWidth: '50px', minHeight: '50px', padding: '0px' };
+        return (
+          <tr>
+            <td style={bgTdImage}><img style={bgImage} src={this.props.image.ImagePath}/></td>
+        <td>{this.props.image.Id}</td>
+        <td>{this.props.image.Name}</td>
+        <td>{this.props.image.Description}</td>
+        <td><a target="_blank" href={this.props.image.ImagePath}>{this.props.image.ImagePath}</a></td>
+        <td className="delete"><img src="../Pictures/delete.png" onClick={this.handleRemoveImage} /></td>
               
-            </tr>
+      </tr>
             );
-        }
-      });
+}
+});
 
 //ImageApp sub-component for adding new entries
-      var NewRow = React.createClass({
+      var NewImage = React.createClass({
           handleSubmit: function (e) {
               e.preventDefault();
               var name = this.refs.name.getDOMNode().value;
@@ -146,8 +145,8 @@ var ImageApp = React.createClass({
 
                   return;
               }
-              var newrow = { Name: name, Description: description, File: imagePath, Loader: loader };
-              this.props.onImageSubmit( newrow );
+              var newimage = { Name: name, Description: description, File: imagePath, Loader: loader };
+              this.props.onImageSubmit( newimage );
           
               this.refs.name.getDOMNode().value = '';
               this.refs.description.getDOMNode().value = '';
